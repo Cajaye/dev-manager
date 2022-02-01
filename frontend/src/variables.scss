@@ -1,0 +1,115 @@
+/* Variables and mixins declared here will be available in all other SCSS files */
+
+@mixin break($breakpoint) {
+  @if $breakpoint==laptop {
+    @media only screen and (min-width: 1025px) and (max-width: 1280px) {
+      @content;
+    }
+  }
+  @if $breakpoint==tablet {
+    @media only screen and (min-width: 700px) {
+      @content;
+    }
+  }
+  @if $breakpoint==mobile {
+    @media only screen and (min-width: 480px) {
+      @content;
+    }
+  }
+}
+
+$small-font: 400;
+$medium-font: 500;
+$large-font: 600;
+$larger-font: 700;
+
+$border-radius: 0.25rem;
+
+$p-text-color: rgb(55 65 81);
+$gen-color: rgb(23 23 23);
+
+$light-grey: rgb(229 231 235);
+
+@mixin fontsize($element) {
+  @if $element==p {
+    font-size: 1rem;
+    font-weight: $small-font;
+    color: $p-text-color;
+  }
+  @if $element==btn {
+    font-size: 1.28rem;
+  }
+  @if $element==h4 {
+    font-size: 1.333rem;
+  }
+  @if $element==h3 {
+    font-size: 1.776889rem;
+  }
+  @if $element==h2 {
+    font-size: 2.368593037rem;
+  }
+  @if $element==h1 {
+    color: $gen-color;
+    font-size: 3.1573345183rem;
+  }
+}
+
+@mixin large-text($size) {
+  @if $size==mid {
+    font-size: 2.5rem;
+    font-weight: $larger-font;
+    line-height: 1;
+  }
+  @if $size==lg {
+    font-size: 3.85rem;
+    font-weight: $larger-font;
+    line-height: 1;
+  }
+}
+
+@mixin grid-column-layouts($amount) {
+  grid-template-columns: repeat($amount, minmax(0, 1fr));
+}
+
+@mixin grid-row-layouts($amount) {
+  grid-template-rows: repeat($amount, minmax(0, 1fr));
+}
+
+%section {
+  @include break(tablet) {
+    height: 100vh;
+    gap: 0;
+  }
+  gap: 4rem;
+  display: grid;
+  text-align: center;
+  place-content: center;
+}
+
+%base-buttons {
+  color: #fff;
+  cursor: pointer;
+  @include fontsize(btn);
+  background-color: $gen-color;
+  border: none;
+  box-shadow: 1px 5px 38px -15px $gen-color;
+  border-radius: $border-radius;
+  outline: none;
+  padding: 0.3em 0.6em;
+}
+
+%form-inputs {
+  border-radius: $border-radius;
+  outline: none;
+  border: $light-grey;
+  background-color: $light-grey;
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+  padding-left: 0.7rem;
+}
+
+%flexy {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
