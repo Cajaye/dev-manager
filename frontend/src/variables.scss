@@ -2,12 +2,12 @@
 
 @mixin break($breakpoint) {
   @if $breakpoint==laptop {
-    @media only screen and (min-width: 1025px) and (max-width: 1280px) {
+    @media only screen and (min-width: 1025px) {
       @content;
     }
   }
   @if $breakpoint==tablet {
-    @media only screen and (min-width: 700px) {
+    @media only screen and (min-width: 768px) {
       @content;
     }
   }
@@ -76,11 +76,7 @@ $light-grey: rgb(229 231 235);
 }
 
 %section {
-  @include break(tablet) {
-    height: 100vh;
-    gap: 0;
-  }
-  gap: 4rem;
+  height: 100vh;
   display: grid;
   text-align: center;
   place-content: center;

@@ -36,10 +36,16 @@
     </div>
   </article>
   <section>
-    <article>
-      <div class="one">something</div>
-      <div class="two">something</div>
-    </article>
+    <div class="one">
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nisi repellat
+      quidem omnis. Voluptas itaque nisi repellat, quae doloribus modi nemo
+      praesentium sint illo sit dolorem?
+    </div>
+    <div class="two">
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nisi repellat
+      quidem omnis. Voluptas itaque nisi repellat, quae doloribus modi nemo
+      praesentium sint illo sit dolorem?
+    </div>
   </section>
 </section>
 
@@ -48,18 +54,18 @@
     margin: auto;
     letter-spacing: 0.6px;
     color: $gen-color;
-    padding: 1.8rem;
-    @include break(tablet) {
+    padding: 3rem;
+    @extend %section;
+    @include break(laptop) {
       @include grid-column-layouts(2);
     }
 
-    @extend %section;
     article {
-      @extend %flexy;
+      align-self: center;
       div {
         h1 {
+          text-align: left;
           @include break(tablet) {
-            text-align: left;
             @include large-text(lg);
           }
           @include large-text(mid);
@@ -72,7 +78,8 @@
           width: fit-content;
         }
         div {
-          @extend %flexy;
+          display: flex;
+          align-items: center;
           color: #fff;
           input[type="button"] {
             cursor: pointer;
@@ -90,13 +97,6 @@
             height: 2rem;
           }
         }
-      }
-    }
-    section {
-      @extend %flexy;
-      article {
-        @extend %flexy;
-        gap: 2rem;
       }
     }
   }

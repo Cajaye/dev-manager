@@ -4,7 +4,7 @@
 </script>
 
 <section>
-  <h1>Welcome, newbie</h1>
+  <h1>Welcome, Newbie</h1>
   <Form />
   <p>Aleady have an account? <Link to="../login">login</Link></p>
 </section>
@@ -12,6 +12,7 @@
 <style lang="scss">
   section {
     @extend %section;
+    gap: 0;
     @include break(tablet) {
       margin: 0rem;
     }
@@ -25,6 +26,7 @@
     }
   }
   p {
-    margin-top: 1rem;
+    @include fontsize(p);
+    margin-top: 2rem;
   }
 </style>
