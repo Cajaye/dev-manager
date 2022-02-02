@@ -13,9 +13,8 @@ app.use(express.json());
 app.use(cookieParser());
 
 //routes
-import usersRoute from "./routes/users";
-app.use("/api/v1/users", usersRoute);
-//app.use("/api/v1/users", authorizeUser, usersRoute);
+import usersRoute from "./routes/auth";
+app.use("/api/v1/auth", usersRoute);
 
 //middlewares
 app.use(notFound);

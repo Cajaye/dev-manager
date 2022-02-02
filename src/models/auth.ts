@@ -1,16 +1,18 @@
 import jwt from "jsonwebtoken";
-import bcrypt, { hash } from "bcryptjs";
+import bcrypt from "bcryptjs";
 import { PrismaClient, Prisma, user } from "@prisma/client";
 export type UserJwt = Pick<Prisma.userCreateArgs["data"], "id" | "email">;
-export type User = Omit<Prisma.userCreateArgs["data"], "id" | "profiles">;
+export type User = Omit<Prisma.userCreateArgs["data"], "id">;
 
 export const Users = (prisma: PrismaClient["user"]) => {
   return Object.assign(prisma, {
     async createUser(data: User): Promise<user> {
       return prisma.create({ data });
     },
-    async getAllUsers(): Promise<user[]> {
-      return prisma.findMany({});
+    async getUser(credentials: Omit<User, "name">) {
+      return prisma.findUnique({
+        where: { email: credentials.email },
+      });
     },
     createJwt({ id, email }: UserJwt) {
       return jwt.sign({ id, email }, process.env.JWT_SECRET as string, {
