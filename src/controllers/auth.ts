@@ -33,16 +33,14 @@ export const login = async (req: Request, res: Response) => {
   assert(userCredentials, ValidateLogin);
   const user = await Users(prisma.user).getUser(userCredentials);
   if (!user) {
-    throw new BadRequestError(
-      "User credentials are invalid try making an account"
-    );
+    throw new BadRequestError("Email does not exist");
   }
   const password = await Users(prisma.user).decode(
     userCredentials.password,
     user.password as string
   );
   if (!password) {
-    throw new BadRequestError("Password is incorrect,try again");
+    throw new BadRequestError("Password is incorrect please re-enter");
   }
   const token = Users(prisma.user).createJwt({
     id: user.id,
