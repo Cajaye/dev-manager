@@ -1,8 +1,8 @@
 //verify jwt token
 import jwt from "jsonwebtoken";
-import type { UserJwt } from "../models/users";
+import type { UserJwt } from "../models/auth";
 import { Request, Response, NextFunction } from "express";
-import { BadRequestError } from "../errors/index";
+import { UnauthenticatedError } from "../errors/index";
 
 export interface userAuth extends Request {
   user: UserJwt;
@@ -15,7 +15,7 @@ export const authorizeUser = async (
 ) => {
   const tokenInCookie = req.cookies.access_token;
   if (!tokenInCookie)
-    throw new BadRequestError("Not authorized to access this route");
+    throw new UnauthenticatedError("Not authorized to access this route");
   try {
     const payload = jwt.verify(
       tokenInCookie,
@@ -24,6 +24,6 @@ export const authorizeUser = async (
     req.user = { email: payload.email, id: payload.id };
     next();
   } catch (error) {
-    throw new BadRequestError("Not authorized to access this route");
+    throw new UnauthenticatedError("Not authorized to access this route");
   }
 };
