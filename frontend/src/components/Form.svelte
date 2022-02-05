@@ -27,6 +27,7 @@
     div {
       label {
         @include fontsize(p);
+        color: $p-text-color;
         text-align: justify;
         display: block;
         margin-bottom: 1rem;

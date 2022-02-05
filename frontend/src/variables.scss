@@ -28,13 +28,12 @@ $border-radius: 0.25rem;
 $p-text-color: rgb(55 65 81);
 $gen-color: rgb(23 23 23);
 
-$light-grey: rgb(229 231 235);
+$light-grey: #f3f4f6;
 
 @mixin fontsize($element) {
   @if $element==p {
     font-size: 1rem;
     font-weight: $small-font;
-    color: $p-text-color;
   }
   @if $element==btn {
     font-size: 1.28rem;

@@ -21,6 +21,7 @@
     h1 {
       @include break(tablet) {
         @include fontsize(h1);
+        color: $gen-color;
       }
       @include fontsize(h2);
       margin-bottom: 1.6rem;
