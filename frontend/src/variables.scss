@@ -7,7 +7,7 @@
     }
   }
   @if $breakpoint==tablet {
-    @media only screen and (min-width: 768px) {
+    @media only screen and (min-width: 800px) {
       @content;
     }
   }
@@ -76,7 +76,6 @@ $light-grey: rgb(229 231 235);
 }
 
 %section {
-  height: 100vh;
   display: grid;
   text-align: center;
   place-content: center;

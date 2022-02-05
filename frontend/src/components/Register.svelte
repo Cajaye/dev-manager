@@ -12,6 +12,7 @@
 <style lang="scss">
   section {
     @extend %section;
+    height: 100vh;
     gap: 0;
     @include break(tablet) {
       margin: 0rem;
