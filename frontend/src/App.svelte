@@ -3,6 +3,7 @@
   import IntroPage from "./components/IntroPage.svelte";
   import Register from "./components/Register.svelte";
   import Login from "./components/Login.svelte";
+  import Dashboard from "./components/Dashboard.svelte";
 </script>
 
 <main>
@@ -15,6 +16,9 @@
     </Route>
     <Route path="login">
       <Login />
+    </Route>
+    <Route path="dashboard">
+      <Dashboard />
     </Route>
   </Router>
 </main>
