@@ -17,27 +17,29 @@ model user {
   name     String
   email    String    @unique
   password String
-  projects project[]
+  projects Project[]
 }
 
-model project {
-  id        Int         @id @default(autoincrement())
-  title     String
-  owner     user        @relation(fields: [userId], references: [id])
-  userId    Int         @unique
-  something structure[]
+model Project {
+  id         Int         @id @default(autoincrement())
+  title      String
+  owner      user        @relation(fields: [userId], references: [id])
+  userId     Int         @unique
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  structures Structure[]
 }
 
-model structure {
+model Structure {
   id          Int             @id @default(autoincrement())
-  belongs     project         @relation(fields: [structureId], references: [id])
+  belongs     Project         @relation(fields: [structureId], references: [id])
   structureId Int             @unique
-  created     keysAndValues[]
+  created     KeysAndValues[]
 }
 
-model keysAndValues {
+model KeysAndValues {
   id              Int       @id @default(autoincrement())
-  belongs         structure @relation(fields: [keysAndValuesId], references: [id])
+  belongs         Structure @relation(fields: [keysAndValuesId], references: [id])
   keysAndValuesId Int       @unique
   createdAt       DateTime  @default(now())
   key             String
