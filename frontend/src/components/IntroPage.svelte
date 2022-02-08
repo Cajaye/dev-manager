@@ -3,7 +3,7 @@
   let navigate = useNavigate();
 </script>
 
-<header>Someone help me build a Logo!</header>
+<header>Someone help me build a Logo🚀!</header>
 <section>
   <article>
     <div>

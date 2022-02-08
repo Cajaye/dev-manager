@@ -1,5 +1,5 @@
 import IsEmail from "isemail";
-import { object, refine, string, number, omit } from "superstruct";
+import { object, refine, string, omit } from "superstruct";
 const email = () => refine(string(), "email", (v) => IsEmail.validate(v));
 
 export const ValidateUser = object({
