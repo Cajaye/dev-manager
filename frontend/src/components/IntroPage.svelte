@@ -1,13 +1,14 @@
 <script lang="ts">
   import { useNavigate } from "svelte-navigator";
   let navigate = useNavigate();
+  import Header from "./Header.svelte";
 </script>
 
-<header>Someone help me build a Logo🚀!</header>
+<Header />
 <section>
   <article>
     <div>
-      <h1>Hello, World! /></h1>
+      <h1>Hello, World!</h1>
       <p>
         Is it hard to keep track of fake logins,passwords,api keys,basically the
         stuff you use during development? Then this is place for you!
@@ -38,12 +39,8 @@
 </section>
 
 <style lang="scss">
-  header {
-    text-align: center;
-    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-    padding: 1.2rem;
-  }
   section {
+    margin-top: 3rem;
     letter-spacing: 0.6px;
     color: $gen-color;
     @extend %section;
@@ -68,6 +65,20 @@
             @include large-text(lg);
           }
           @include large-text(mid);
+        }
+        h1::after {
+          content: " />";
+          background-image: linear-gradient(
+            90deg,
+            rgba(131, 58, 180, 1) 0%,
+            rgba(253, 29, 29, 1) 50%,
+            rgba(252, 176, 69, 1) 100%
+          );
+          background-clip: 100%;
+          -webkit-text-fill-color: transparent;
+          -moz-text-fill-color: transparent;
+          -webkit-background-clip: text;
+          -moz-background-clip: text;
         }
         p {
           text-align: left;

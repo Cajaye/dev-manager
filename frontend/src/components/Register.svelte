@@ -1,8 +1,10 @@
 <script lang="ts">
   import { Link } from "svelte-navigator";
   import Form from "./Form.svelte";
+  import Header from "./Header.svelte";
 </script>
 
+<Header />
 <section>
   <h1>Welcome, Newbie</h1>
   <Form />
