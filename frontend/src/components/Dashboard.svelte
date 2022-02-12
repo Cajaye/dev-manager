@@ -43,6 +43,8 @@
       filteredList = [...projects];
     }
   }
+
+  import { fade } from "svelte/transition";
 </script>
 
 <svelte:head>
@@ -108,17 +110,21 @@
   </nav>
   <section>
     {#each filteredList as project}
-      <div>
+      <div in:fade={{ duration: 400 }} out:fade={{ duration: 400 }}>
         <figure>
           <img src={project.image} alt="" />
         </figure>
         <div>
           <h1>{project.name}</h1>
-          <p>{project.label}</p>
+          <p>
+            <span>{project.label}</span>
+          </p>
         </div>
       </div>
     {:else}
-      <p>Cannot any projects that starts with "{search}"</p>
+      <p>
+        Cannot find any projects with the name of "{search}"
+      </p>
     {/each}
   </section>
 </main>
@@ -193,17 +199,6 @@
           @extend %base-buttons;
         }
       }
-      // ul {
-      //   border-bottom: 1px solid $light-grey;
-      //   li {
-      //     cursor: pointer;
-      //     display: inline;
-      //     margin-left: 2rem;
-      //   }
-      //   li:hover {
-      //     border-bottom: 2px solid blue;
-      //   }
-      // }
     }
     section {
       margin: 0 4rem;
