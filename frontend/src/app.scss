@@ -28,6 +28,10 @@ select {
   color: inherit;
 }
 
+img {
+  user-select: none;
+}
+
 p,
 h1,
 h2,

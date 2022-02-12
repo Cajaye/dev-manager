@@ -1,11 +1,47 @@
 <script lang="ts">
   type mood = "happy" | "sad";
   type type = "male" | "female" | "human";
-  let avatarType: type = "male";
+  let avatarMoodLS: null | type = null;
+  let avatarType: type = avatarMoodLS ?? "male";
   let avatarMood: mood = "happy";
 
   function toggleMood() {
     avatarMood === "happy" ? (avatarMood = "sad") : (avatarMood = "happy");
+  }
+
+  let projects = [
+    {
+      image:
+        "https://images.unsplash.com/photo-1643646736753-04809d58cbf9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80",
+      name: "Big Stuff",
+      label: "ongoing",
+    },
+    {
+      image:
+        "https://images.unsplash.com/photo-1644300616688-90b3f5f7792a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80",
+      name: "Small Stuff",
+      label: "hosted",
+    },
+    {
+      image:
+        "https://images.unsplash.com/photo-1644251966508-47b1a3d2e56d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80",
+      name: "Medium Stuff",
+      label: "abandoned",
+    },
+  ];
+
+  let search: string;
+
+  let filteredList = [...projects];
+
+  $: {
+    if (search && search.trim() !== "") {
+      filteredList = projects.filter((item) =>
+        item.name.toLowerCase().includes(search.toLowerCase().trim())
+      );
+    } else {
+      filteredList = [...projects];
+    }
   }
 </script>
 
@@ -43,12 +79,53 @@
       </svg>
     </figure>
   </header>
-  <section />
-  <section />
+  <nav>
+    <div>
+      <input
+        bind:value={search}
+        type="search"
+        name="search"
+        id="search"
+        placeholder="Search for project"
+      />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+        />
+      </svg>
+    </div>
+    <div>
+      <input type="button" value="New Project" />
+    </div>
+  </nav>
+  <section>
+    {#each filteredList as project}
+      <div>
+        <figure>
+          <img src={project.image} alt="" />
+        </figure>
+        <div>
+          <h1>{project.name}</h1>
+          <p>{project.label}</p>
+        </div>
+      </div>
+    {:else}
+      <p>Cannot any projects that starts with "{search}"</p>
+    {/each}
+  </section>
 </main>
 
 <style lang="scss">
   main {
+    overflow: hidden;
     header {
       @extend %flexy;
       justify-content: space-between;
@@ -59,6 +136,7 @@
       }
       padding: 0.3rem;
       h1 {
+        user-select: none;
         @extend %textgradient;
         @include break(tablet) {
           @include fontsize(h3);
@@ -75,6 +153,7 @@
         }
         svg {
           cursor: pointer;
+          user-select: none;
           margin-left: 1rem;
           width: 1.5rem;
           height: 1.5rem;
@@ -83,6 +162,66 @@
         }
         svg:hover {
           transform: rotate(90deg);
+        }
+      }
+    }
+    nav {
+      margin: 4rem;
+      @extend %flexy;
+      justify-content: space-between;
+      div {
+        @extend %flexy;
+        gap: 20px;
+        input[type="search"] {
+          width: 30rem;
+          @extend %form-inputs;
+          padding-top: 0.6rem;
+          padding-bottom: 0.6rem;
+        }
+        input[type="search"]:focus-visible {
+          outline: 2px solid blue;
+        }
+        svg {
+          user-select: none;
+          margin-left: -4rem;
+          width: 1.5rem;
+          height: 1.5rem;
+        }
+      }
+      div {
+        input[type="button"] {
+          @extend %base-buttons;
+        }
+      }
+      // ul {
+      //   border-bottom: 1px solid $light-grey;
+      //   li {
+      //     cursor: pointer;
+      //     display: inline;
+      //     margin-left: 2rem;
+      //   }
+      //   li:hover {
+      //     border-bottom: 2px solid blue;
+      //   }
+      // }
+    }
+    section {
+      margin: 0 4rem;
+      display: grid;
+      align-items: center;
+      justify-content: center;
+      column-gap: 2rem;
+      @include grid-column-layouts(3);
+      div {
+        padding: 0.75rem;
+        cursor: pointer;
+        background-color: $light-grey;
+        img {
+          border-radius: $border-radius;
+          width: 100%;
+          object-fit: cover;
+          padding: 0;
+          margin: 0;
         }
       }
     }
