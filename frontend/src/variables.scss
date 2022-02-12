@@ -107,3 +107,17 @@ $light-grey: #f3f4f6;
   justify-content: center;
   align-items: center;
 }
+
+%textgradient {
+  background-image: linear-gradient(
+    90deg,
+    rgba(131, 58, 180, 1) 0%,
+    rgba(253, 29, 29, 1) 50%,
+    rgba(252, 176, 69, 1) 100%
+  );
+  background-clip: 100%;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+}

@@ -4,6 +4,10 @@
   import Header from "./Header.svelte";
 </script>
 
+<svelte:head>
+  <title>Register</title>
+</svelte:head>
+
 <Header />
 <section>
   <h1>Welcome, Newbie</h1>

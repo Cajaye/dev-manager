@@ -4,6 +4,10 @@
   import Header from "./Header.svelte";
 </script>
 
+<svelte:head>
+  <title>Dev.manager</title>
+</svelte:head>
+
 <Header />
 <section>
   <article>
@@ -68,17 +72,7 @@
         }
         h1::after {
           content: " />";
-          background-image: linear-gradient(
-            90deg,
-            rgba(131, 58, 180, 1) 0%,
-            rgba(253, 29, 29, 1) 50%,
-            rgba(252, 176, 69, 1) 100%
-          );
-          background-clip: 100%;
-          -webkit-text-fill-color: transparent;
-          -moz-text-fill-color: transparent;
-          -webkit-background-clip: text;
-          -moz-background-clip: text;
+          @extend %textgradient;
         }
         p {
           text-align: left;
