@@ -6,7 +6,7 @@ import cors from "cors";
 import { notFound } from "./middleware/not-found";
 import { errorHandlerMiddleWare } from "./middleware/error-handler";
 import cookieParser from "cookie-parser";
-import { authorizeUser } from "./middleware/authentication";
+//import { authorizeUser } from "./middleware/authentication";
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -28,7 +28,7 @@ const start = async () => {
       console.log(`App listening at http://localhost:${PORT}`);
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 

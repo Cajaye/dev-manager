@@ -13,7 +13,7 @@ datasource db {
 }
 
 model user {
-  id       Int       @id @default(autoincrement())
+  id       String    @id @default(uuid())
   name     String
   email    String    @unique
   password String
@@ -21,27 +21,34 @@ model user {
 }
 
 model Project {
-  id         Int         @id @default(autoincrement())
+  id         String      @id @default(uuid())
   title      String
   owner      user        @relation(fields: [userId], references: [id])
-  userId     Int         @unique
+  userId     String
+  label      Label       @default(ONGOING)
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
   structures Structure[]
 }
 
 model Structure {
-  id          Int             @id @default(autoincrement())
+  id          String          @id @default(uuid())
   belongs     Project         @relation(fields: [structureId], references: [id])
-  structureId Int             @unique
+  structureId String          @unique
   created     KeysAndValues[]
 }
 
 model KeysAndValues {
-  id              Int       @id @default(autoincrement())
+  id              String    @id @default(uuid())
   belongs         Structure @relation(fields: [keysAndValuesId], references: [id])
-  keysAndValuesId Int       @unique
+  keysAndValuesId String    @unique
   createdAt       DateTime  @default(now())
   key             String
   value           String
+}
+
+enum Label {
+  ONGOING
+  ABONDONED
+  FINISHED
 }

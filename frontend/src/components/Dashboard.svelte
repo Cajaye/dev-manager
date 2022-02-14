@@ -5,24 +5,23 @@
   let avatarType: type = avatarMoodLS ?? "male";
   let avatarMood: mood = "happy";
 
-  function toggleMood() {
-    avatarMood === "happy" ? (avatarMood = "sad") : (avatarMood = "happy");
-  }
-
   let projects = [
     {
+      id: 1,
       image:
         "https://images.unsplash.com/photo-1643646736753-04809d58cbf9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80",
       name: "Big Stuff",
       label: "ongoing",
     },
     {
+      id: 2,
       image:
         "https://images.unsplash.com/photo-1644300616688-90b3f5f7792a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80",
       name: "Small Stuff",
       label: "hosted",
     },
     {
+      id: 3,
       image:
         "https://images.unsplash.com/photo-1644251966508-47b1a3d2e56d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80",
       name: "Medium Stuff",
@@ -37,7 +36,12 @@
   $: {
     if (search && search.trim() !== "") {
       filteredList = projects.filter((item) =>
-        item.name.toLowerCase().includes(search.toLowerCase().trim())
+        item.name.toLowerCase().includes(
+          search
+            .replace(/[^\w\s]/gi, "") //removes special characters
+            .toLowerCase()
+            .trim()
+        )
       );
     } else {
       filteredList = [...projects];
@@ -45,6 +49,28 @@
   }
 
   import { fade } from "svelte/transition";
+
+  function clickOutside(node: HTMLElement) {
+    const handleClickEvent = (event) => {
+      if (!node.contains(event.target)) {
+        //if node is not a decendant of event.target?
+        //target would be whatever we assign use:clickOutside to
+        node.dispatchEvent(new CustomEvent("outclick")); //makes a new custom event called outclick
+      }
+    };
+    document.addEventListener("click", handleClickEvent, true); //add event listener to the page
+
+    return {
+      destroy() {
+        document.removeEventListener("click", handleClickEvent, true);
+      },
+    };
+  }
+  //use:clickOutside on:outclick={}
+
+  function focusInput(node: HTMLElement) {
+    node.focus();
+  }
 </script>
 
 <svelte:head>
@@ -56,7 +82,10 @@
     <h1>Dev.manager</h1>
     <figure>
       <img
-        on:click={toggleMood}
+        on:click={() =>
+          avatarMood === "happy"
+            ? (avatarMood = "sad")
+            : (avatarMood = "happy")}
         src="https://avatars.dicebear.com/api/{avatarType}/:seed.svg?mood[]={avatarMood}"
         alt="avatar"
       />
@@ -108,25 +137,29 @@
       <input type="button" value="New Project" />
     </div>
   </nav>
-  <section>
-    {#each filteredList as project}
-      <div in:fade={{ duration: 400 }} out:fade={{ duration: 400 }}>
-        <figure>
-          <img src={project.image} alt="" />
-        </figure>
-        <div>
-          <h1>{project.name}</h1>
-          <p>
-            <span>{project.label}</span>
-          </p>
+  {#if projects.length === 0}
+    <p style:text-align="center">Create a new project</p>
+  {:else}
+    <section>
+      {#each filteredList as project (project.id)}
+        <div in:fade={{ duration: 400 }} out:fade={{ duration: 400 }}>
+          <figure>
+            <img src={project.image} alt="" />
+          </figure>
+          <div>
+            <h1>{project.name}</h1>
+            <p>
+              <span>{project.label}</span>
+            </p>
+          </div>
         </div>
-      </div>
-    {:else}
-      <p>
-        Cannot find any projects with the name of "{search}"
-      </p>
-    {/each}
-  </section>
+      {:else}
+        <p style:text-align="center">
+          Cannot find any projects with the name of "{search.trim()}"
+        </p>
+      {/each}
+    </section>
+  {/if}
 </main>
 
 <style lang="scss">
@@ -172,14 +205,20 @@
       }
     }
     nav {
-      margin: 4rem;
+      @include break(tablet) {
+        margin: 4rem;
+      }
+      margin: 4rem 1rem;
+
       @extend %flexy;
       justify-content: space-between;
       div {
         @extend %flexy;
         gap: 20px;
         input[type="search"] {
-          width: 30rem;
+          @include break(tablet) {
+            width: 30rem;
+          }
           @extend %form-inputs;
           padding-top: 0.6rem;
           padding-bottom: 0.6rem;
@@ -188,6 +227,7 @@
           outline: 2px solid blue;
         }
         svg {
+          background-color: $light-grey;
           user-select: none;
           margin-left: -4rem;
           width: 1.5rem;
@@ -196,27 +236,49 @@
       }
       div {
         input[type="button"] {
-          @extend %base-buttons;
+          color: #fff;
+          cursor: pointer;
+          @include break(tablet) {
+            @include fontsize(btn);
+          }
+          @include fontsize(p);
+          background-color: $gen-color;
+          border: none;
+          border-radius: $border-radius;
+          outline: none;
+          padding: 0.3em 0.6em;
         }
       }
     }
     section {
       margin: 0 4rem;
       display: grid;
+      @include break(laptop) {
+        @include grid-column-layouts(3);
+      }
       align-items: center;
       justify-content: center;
-      column-gap: 2rem;
-      @include grid-column-layouts(3);
+      gap: 2rem;
+
       div {
         padding: 0.75rem;
         cursor: pointer;
         background-color: $light-grey;
-        img {
-          border-radius: $border-radius;
-          width: 100%;
-          object-fit: cover;
-          padding: 0;
-          margin: 0;
+        min-width: 300px;
+        figure {
+          img {
+            border-radius: $border-radius;
+            width: 100%;
+            object-fit: cover;
+            padding: 0;
+            margin: 0;
+          }
+        }
+        h1 {
+          @include fontsize(h3);
+        }
+        p {
+          @include fontsize(p);
         }
       }
     }
