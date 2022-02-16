@@ -1,41 +1,18 @@
 <script lang="ts">
+  import { data } from "../stores/projects";
   type mood = "happy" | "sad";
   type type = "male" | "female" | "human";
   let avatarMoodLS: null | type = null;
   let avatarType: type = avatarMoodLS ?? "male";
   let avatarMood: mood = "happy";
 
-  let projects = [
-    {
-      id: 1,
-      image:
-        "https://images.unsplash.com/photo-1643646736753-04809d58cbf9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80",
-      name: "Big Stuff",
-      label: "ongoing",
-    },
-    {
-      id: 2,
-      image:
-        "https://images.unsplash.com/photo-1644300616688-90b3f5f7792a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80",
-      name: "Small Stuff",
-      label: "hosted",
-    },
-    {
-      id: 3,
-      image:
-        "https://images.unsplash.com/photo-1644251966508-47b1a3d2e56d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80",
-      name: "Medium Stuff",
-      label: "abandoned",
-    },
-  ];
-
   let search: string;
 
-  let filteredList = [...projects];
+  let filteredList = [];
 
   $: {
     if (search && search.trim() !== "") {
-      filteredList = projects.filter((item) =>
+      filteredList = $data.filter((item) =>
         item.name.toLowerCase().includes(
           search
             .replace(/[^\w\s]/gi, "") //removes special characters
@@ -44,7 +21,7 @@
         )
       );
     } else {
-      filteredList = [...projects];
+      filteredList = [...$data];
     }
   }
 
@@ -137,7 +114,7 @@
       <input type="button" value="New Project" />
     </div>
   </nav>
-  {#if projects.length === 0}
+  {#if $data.length === 0}
     <p style:text-align="center">Create a new project</p>
   {:else}
     <section>

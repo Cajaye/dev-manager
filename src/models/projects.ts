@@ -7,7 +7,7 @@ export const Projects = async (prisma: PrismaClient["project"]) => {
     },
     async getProjects(
       id: string,
-      order: "desc" | "asc" = "asc" //get this from req.params
+      order: "desc" | "asc" = "asc" // if(req.query.order)
     ) {
       return prisma.findMany({
         where: {
@@ -17,6 +17,7 @@ export const Projects = async (prisma: PrismaClient["project"]) => {
       });
     },
     async getProject(id: string, projectId: string) {
+      // if(req.params.order)
       return prisma.findFirst({ where: { id: projectId, userId: id } });
     },
   });
