@@ -3,11 +3,10 @@
   type mood = "happy" | "sad";
   type type = "male" | "female" | "human";
   let avatarMoodLS: null | type = null;
-  let avatarType: type = avatarMoodLS ?? "male";
+  let avatarType: type = avatarMoodLS ?? "human";
   let avatarMood: mood = "happy";
 
   let search: string;
-
   let filteredList = [];
 
   $: {
@@ -26,28 +25,6 @@
   }
 
   import { fade } from "svelte/transition";
-
-  function clickOutside(node: HTMLElement) {
-    const handleClickEvent = (event) => {
-      if (!node.contains(event.target)) {
-        //if node is not a decendant of event.target?
-        //target would be whatever we assign use:clickOutside to
-        node.dispatchEvent(new CustomEvent("outclick")); //makes a new custom event called outclick
-      }
-    };
-    document.addEventListener("click", handleClickEvent, true); //add event listener to the page
-
-    return {
-      destroy() {
-        document.removeEventListener("click", handleClickEvent, true);
-      },
-    };
-  }
-  //use:clickOutside on:outclick={}
-
-  function focusInput(node: HTMLElement) {
-    node.focus();
-  }
 </script>
 
 <svelte:head>
@@ -119,7 +96,7 @@
   {:else}
     <section>
       {#each filteredList as project (project.id)}
-        <div in:fade={{ duration: 400 }} out:fade={{ duration: 400 }}>
+        <div in:fade={{ duration: 500 }} out:fade={{ duration: 500 }}>
           <figure>
             <img src={project.image} alt="" />
           </figure>
