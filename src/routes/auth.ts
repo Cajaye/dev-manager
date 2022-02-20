@@ -1,5 +1,5 @@
 import { Router } from "express";
-export const router = Router();
+const router = Router();
 import { login, createUser } from "../controllers/auth";
 
 router.route("/register").post(createUser);

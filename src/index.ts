@@ -16,6 +16,9 @@ app.use(cookieParser());
 import usersRoute from "./routes/auth";
 app.use("/api/v1/auth", usersRoute);
 
+import projectRoute from "./routes/projects";
+app.use("/api/v1/projects", projectRoute);
+
 //middlewares
 app.use(notFound);
 app.use(errorHandlerMiddleWare);

@@ -26,6 +26,7 @@ model Project {
   owner      user        @relation(fields: [userId], references: [id])
   userId     String
   label      Label       @default(ONGOING)
+  link       String
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
   structures Structure[]
