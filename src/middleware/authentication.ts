@@ -4,7 +4,7 @@ import type { UserJwt } from "../models/auth";
 import { Request, Response, NextFunction } from "express";
 import { UnauthenticatedError } from "../errors/index";
 
-export interface userAuth extends Request {
+export interface Requser extends Request {
   user: UserJwt;
 }
 
