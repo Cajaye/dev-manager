@@ -40,6 +40,6 @@ export const errorHandlerMiddleWare = (
       errorObject.msg = "Try entering another email this one already exists";
     }
   }
-  return res.status(400).json({ err });
-  //return res.status(errorObject.statusCode).json({ msg: errorObject.msg });
+  //return res.status(400).json({ err });
+  return res.status(errorObject.statusCode).json({ msg: errorObject.msg });
 };

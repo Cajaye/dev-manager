@@ -4,12 +4,8 @@ import type { UserJwt } from "../models/auth";
 import { Request, Response, NextFunction } from "express";
 import { UnauthenticatedError } from "../errors/index";
 
-export interface Requser extends Request {
-  user: UserJwt;
-}
-
 export const authorizeUser = async (
-  req: any,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {

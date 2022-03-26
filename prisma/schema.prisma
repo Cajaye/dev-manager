@@ -21,31 +21,24 @@ model user {
 }
 
 model Project {
-  id         String      @id @default(uuid())
-  title      String
-  owner      user        @relation(fields: [userId], references: [id])
-  userId     String
-  label      Label       @default(ONGOING)
-  link       String
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
-  structures Structure[]
-}
-
-model Structure {
-  id          String          @id @default(uuid())
-  belongs     Project         @relation(fields: [structureId], references: [id])
-  structureId String          @unique
-  created     KeysAndValues[]
+  id        String          @id @default(uuid())
+  title     String
+  owner     user            @relation(fields: [userId], references: [id])
+  userId    String
+  label     Label           @default(ONGOING)
+  link      String
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  inputs    KeysAndValues[]
 }
 
 model KeysAndValues {
-  id              String    @id @default(uuid())
-  belongs         Structure @relation(fields: [keysAndValuesId], references: [id])
-  keysAndValuesId String    @unique
-  createdAt       DateTime  @default(now())
-  key             String
-  value           String
+  id        String   @id @default(uuid())
+  belongs   Project  @relation(fields: [projectId], references: [id])
+  projectId String   @unique
+  createdAt DateTime @default(now())
+  key       String
+  value     String
 }
 
 enum Label {

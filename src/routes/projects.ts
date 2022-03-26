@@ -1,6 +1,7 @@
 import { Router } from "express";
 const router = Router();
-import { postProject } from "../controllers/projects";
+import { postProject, getProjectById } from "../controllers/projects";
 router.route("/").post(postProject);
+router.route("/:id").get(getProjectById);
 
 export default router;
